@@ -1,2 +1,26 @@
 # Environment variables
 .env
+
+# Spring
+HELP.md
+target/
+!**/src/main/**/target/
+!**/src/test/**/target/
+backend/target/
+backend/.idea/
+backend/*.iml
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
