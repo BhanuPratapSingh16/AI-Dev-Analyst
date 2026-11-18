@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -24,10 +25,6 @@ public class Workspace {
     @Column(nullable = false, length = 150)
     private String name;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 30)
-    private WorkspaceType type;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id", nullable = false)
     private User owner;
@@ -35,4 +32,7 @@ public class Workspace {
     @Builder.Default
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
+
+    @OneToMany(mappedBy = "workspace")
+    private List<WorkspaceMember> members;
 }
