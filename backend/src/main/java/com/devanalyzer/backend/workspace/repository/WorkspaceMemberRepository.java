@@ -14,4 +14,6 @@ public interface WorkspaceMemberRepository extends JpaRepository<WorkspaceMember
 
     @EntityGraph(attributePaths = {"user"})
     List<WorkspaceMember> findAllByWorkspaceId(UUID workspaceId);
+
+    void deleteWorkspaceMemberByWorkspaceIdAndUserId(UUID workspaceId, UUID userId);
 }

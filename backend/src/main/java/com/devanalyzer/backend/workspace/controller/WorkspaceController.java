@@ -1,10 +1,9 @@
 package com.devanalyzer.backend.workspace.controller;
 
 import com.devanalyzer.backend.security.CustomUserDetails;
-import com.devanalyzer.backend.workspace.dto.WorkspaceCreateRequest;
-import com.devanalyzer.backend.workspace.dto.WorkspaceMemberResponse;
-import com.devanalyzer.backend.workspace.dto.WorkspaceResponse;
+import com.devanalyzer.backend.workspace.dto.*;
 import com.devanalyzer.backend.workspace.entity.WorkspaceMember;
+import com.devanalyzer.backend.workspace.entity.WorkspaceRole;
 import com.devanalyzer.backend.workspace.service.WorkspaceService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,7 +44,7 @@ public class WorkspaceController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteWorkspaceofUser(@PathVariable UUID id, @AuthenticationPrincipal CustomUserDetails userDetails){
+    public ResponseEntity<?> deleteWorkspaceOfUser(@PathVariable UUID id, @AuthenticationPrincipal CustomUserDetails userDetails){
         UUID userId = userDetails.getId();
         workspaceService.deleteWorkspaceOfUser(id, userId);
         return ResponseEntity.ok(Map.of("message", "Deleted workspace successfully"));
@@ -61,5 +60,24 @@ public class WorkspaceController {
     public ResponseEntity<WorkspaceMemberResponse> getMemberOfWorkspaceById(@PathVariable UUID id, @PathVariable UUID userId, @AuthenticationPrincipal CustomUserDetails userDetails){
         UUID loggedUserId = userDetails.getId();
         return ResponseEntity.ok(workspaceService.getMemberOfWorkspaceById(id, userId, loggedUserId));
+    }
+
+    @PatchMapping("/{id}/members/changerole")
+    public ResponseEntity<WorkspaceMemberResponse> changeMemberRole(@PathVariable UUID id, @RequestBody ChangeMemberRoleRequest request, @AuthenticationPrincipal CustomUserDetails userDetails){
+        UUID loggedUserId = userDetails.getId();
+        return ResponseEntity.ok(workspaceService.changeMemberRole(id, request, loggedUserId));
+    }
+
+    @PostMapping("/{id}/members/add/")
+    public ResponseEntity<WorkspaceMemberResponse> addMemberToWorkspace(@PathVariable UUID id, @RequestBody AddMemberRequest request, @AuthenticationPrincipal CustomUserDetails userDetails){
+        UUID loggedUserId = userDetails.getId();
+        return ResponseEntity.ok(workspaceService.addMemberToWorkspace(id, loggedUserId, request));
+    }
+
+    @DeleteMapping("/{id}/members/{userId}")
+    public ResponseEntity<?> removeMemberFromWorkspace(@PathVariable UUID id, @PathVariable UUID userId, @AuthenticationPrincipal CustomUserDetails userDetails){
+        UUID loggedUserId = userDetails.getId();
+        workspaceService.removeMemberFromWorkspace(id, userId, loggedUserId);
+        return ResponseEntity.ok(Map.of("message", "Successfully removed the user!"));
     }
 }
