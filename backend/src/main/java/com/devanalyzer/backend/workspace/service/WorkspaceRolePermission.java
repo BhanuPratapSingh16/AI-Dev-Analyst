@@ -17,7 +17,8 @@ public class WorkspaceRolePermission {
                     WorkspacePermission.ADD_MEMBERS,
                     WorkspacePermission.REMOVE_MEMBERS,
                     WorkspacePermission.CHANGE_MEMBER_ROLES,
-                    WorkspacePermission.VIEW_ANALYTICS
+                    WorkspacePermission.VIEW_ANALYTICS,
+                    WorkspacePermission.CONNECT_REPOSITORY
             );
             case DEVELOPER -> EnumSet.of(
                     WorkspacePermission.VIEW_WORKSPACE,
