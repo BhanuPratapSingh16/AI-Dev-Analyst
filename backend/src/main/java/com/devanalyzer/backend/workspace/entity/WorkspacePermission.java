@@ -13,4 +13,6 @@ public enum WorkspacePermission {
     CHANGE_MEMBER_ROLES,
 
     TRANSFER_OWNERSHIP,
+
+    CONNECT_REPOSITORY
 }
